@@ -11,6 +11,7 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 export class App {
   protected title = 'ai-coach-app';
   videoUrl: SafeUrl | null = null;
+  message: string = '';
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -21,6 +22,11 @@ export class App {
       const file = input.files[0];
       const objectUrl = URL.createObjectURL(file);
       this.videoUrl = this.sanitizer.bypassSecurityTrustUrl(objectUrl);
+      this.message = '';
     }
+  }
+
+  onSubmit(): void {
+    this.message = 'Video submitted';
   }
 }
