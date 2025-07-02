@@ -1,46 +1,74 @@
-<div class="container">
-  <h1>AI Coach Video Uploader</h1>
-  <p>Select a local video file to upload for analysis.</p>
-
-  <div class="upload-section">
-    <label for="file-upload" class="custom-file-upload">
-      Click to Upload a Video
-    </label>
-    <input
-      id="file-upload"
-      type="file"
-      (change)="onFileSelected($event)"
-      accept="video/*"
-    />
-  </div>
-
-  @if (videoUrl) {
-  <div class="video-player-wrapper">
-    <video [src]="videoUrl" controls autoplay>
-      Your browser does not support the video tag.
-    </video>
-    <div class="button-row">
-      <button class="submit-button" (click)="onSubmit()" [disabled]="isUploading">
-        {{ isUploading ? 'Uploading...' : 'Submit to AI Coach' }}
-      </button>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="logo">AI Coach</div>
+    <div class="menu-section">
+      <div class="menu-title">Pages</div>
+      <ul class="dropdown">
+        <li class="dropdown-item active">Home</li>
+        <!-- Future pages can be added here -->
+      </ul>
     </div>
+  </nav>
+  <div class="container">
+    <div class="upload-area" [class.expanded]="videoUrl">
+      <h1>AI Coaching Assistant</h1>
+      <p>Upload your gameplay!</p>
+
+      <div class="upload-section">
+        <label for="file-upload" class="custom-button">
+          Click to Upload a Video
+        </label>
+        <input
+          id="file-upload"
+          #fileInput
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="video/*"
+        />
+      </div>
+
+      <div class="video-area">
+        @if (videoUrl) {
+        <div class="video-player-wrapper">
+          <button
+            class="close-button"
+            (click)="removeVideo(fileInput)"
+            aria-label="Remove video"
+          >
+            &times;
+          </button>
+          <video [src]="videoUrl" controls autoplay>
+            Your browser does not support the video tag.
+          </video>
+          <div class="button-row">
+            <button class="custom-button" (click)="onSubmit()" [disabled]="isUploading">
+              {{ isUploading ? 'Uploading...' : 'Submit to AI Coach' }}
+            </button>
+          </div>
     
-    @if (isUploading) {
-    <div class="progress-container">
-      <div class="progress-bar" [style.width.%]="uploadProgress"></div>
-      <div class="progress-text">{{ uploadProgress }}%</div>
+          @if (isUploading) {
+            <div class="progress-container">
+              <div class="progress-bar" [style.width.%]="uploadProgress"></div>
+              <div class="progress-text">{{ uploadProgress }}%</div>
+            </div>
+          }
+    
+          @if (message) {
+            <div class="message">{{ message }}</div>
+          }
+        </div>
+        } @else {
+        <div class="placeholder">
+          <p>Your video will appear here.</p>
+        </div>
+        }
+      </div>
     </div>
-    }
-    
-    @if (message) {
-    <div class="message">{{ message }}</div>
-    }
+    <div class="model-output-area">
+      <div class="model-output-label">AI Analysis</div>
+      <div class="model-output-text">Model output will appear here.</div>
+    </div>
   </div>
-  } @else {
-  <div class="placeholder">
-    <p>Your video will appear here.</p>
-  </div>
-  }
 </div>
 
 <router-outlet />

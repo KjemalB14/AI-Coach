@@ -68,4 +68,12 @@ export class App {
       }
     });
   }
+
+  removeVideo(fileInput: HTMLInputElement): void {
+    this.videoUrl = null;
+    this.message = '';
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
 }
