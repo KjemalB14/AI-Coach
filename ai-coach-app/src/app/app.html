@@ -41,9 +41,21 @@
             Your browser does not support the video tag.
           </video>
           <div class="button-row">
-            <button class="custom-button" (click)="onSubmit()">Submit</button>
+            <button class="custom-button" (click)="onSubmit()" [disabled]="isUploading">
+              {{ isUploading ? 'Uploading...' : 'Submit to AI Coach' }}
+            </button>
           </div>
-          <div class="text-area">{{ message }}</div>
+    
+          @if (isUploading) {
+            <div class="progress-container">
+              <div class="progress-bar" [style.width.%]="uploadProgress"></div>
+              <div class="progress-text">{{ uploadProgress }}%</div>
+            </div>
+          }
+    
+          @if (message) {
+            <div class="message">{{ message }}</div>
+          }
         </div>
         } @else {
         <div class="placeholder">

@@ -5,6 +5,7 @@ import datetime
 from typing import Optional, List, Dict
 from fastapi import FastAPI, Request, Response, UploadFile, File, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from ariadne import load_schema_from_path, make_executable_schema, graphql_sync, snake_case_fallback_resolvers
 from ariadne.explorer import ExplorerGraphiQL
 from ariadne import ObjectType, MutationType
@@ -84,6 +85,15 @@ schema = make_executable_schema(
 
 # Create FastAPI app
 app = FastAPI(title="AI Coach API")
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],  # Angular default port
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Mount GraphQL app
 graphql_app = GraphQL(
