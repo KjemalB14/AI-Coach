@@ -1,3 +1,19 @@
 type Query {
   hello: String!
+  videoList: [VideoInfo!]!
+}
+
+type Mutation {
+  uploadVideoStatus(filename: String!): UploadResult!
+}
+
+type VideoInfo {
+  filename: String!
+  uploadTime: String!
+}
+
+type UploadResult {
+  success: Boolean!
+  message: String!
+  filename: String
 }
