@@ -29,4 +29,12 @@ export class App {
   onSubmit(): void {
     this.message = 'Video submitted';
   }
+
+  removeVideo(fileInput: HTMLInputElement): void {
+    this.videoUrl = null;
+    this.message = '';
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
 }
